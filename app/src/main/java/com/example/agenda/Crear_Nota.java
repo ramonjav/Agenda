@@ -74,7 +74,6 @@ public class Crear_Nota extends AppCompatActivity {
                 listNotas.add(0,  new Notas(mycalendar, textto, categoria2));
 
                 finish();
-
             }
         });
     }
@@ -103,4 +102,5 @@ public class Crear_Nota extends AppCompatActivity {
 
         }
     };
+
 }

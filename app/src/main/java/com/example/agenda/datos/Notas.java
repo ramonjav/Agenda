@@ -1,11 +1,12 @@
 package com.example.agenda.datos;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class Notas {
+public class Notas implements Serializable {
 
     private Calendar fecha;
     private String texto;

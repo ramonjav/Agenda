@@ -32,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         lista = (ListView)findViewById(R.id.list);
         nuevaNote = (FloatingActionButton)findViewById(R.id.floatingActionButton7);
-
-        //listNotas.add(new Notas("Hola", "Urgente"));
+        GestionFicheros.leerdatos(this);
 
         lna = new ListadoNotasAdapter(this, listNotas);
         lista.setAdapter(lna);
@@ -89,7 +88,13 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onStart() {
         super.onStart();
-
       lna.notifyDataSetChanged();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        GestionFicheros.guardardatos(this);
     }
 }
