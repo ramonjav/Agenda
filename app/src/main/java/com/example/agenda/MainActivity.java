@@ -1,7 +1,9 @@
 package com.example.agenda;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,12 +50,34 @@ public class MainActivity extends AppCompatActivity {
         lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                listNotas.remove(position);
-                lna.notifyDataSetChanged();
+                createsimpledialog(position).show();
+
+
                 return false;
             }
         });
 
+    }
+
+    public AlertDialog createsimpledialog(final int position){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Eliminando Nota")
+                .setMessage("¿Seguro que quieres eliminar esta nota")
+        .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                listNotas.remove(position);
+                lna.notifyDataSetChanged();
+            }
+        })
+        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO: cancelar operacion
+            }
+        });
+
+        return builder.create();
     }
 
     protected void onStart() {
