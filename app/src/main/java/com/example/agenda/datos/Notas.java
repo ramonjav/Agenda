@@ -1,7 +1,9 @@
 package com.example.agenda.datos;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class Notas {
 
@@ -12,7 +14,7 @@ public class Notas {
 
     public Notas(String texto, String categoria){
 
-        this.fecha = Calendar.getInstance();
+        //this.fecha = Calendar.getInstance();
         this.texto = texto;
         this.categoria = comprobarcat(categoria);
 
@@ -75,9 +77,21 @@ public class Notas {
     }
 
     public String getFechaToString(){
+        String myFormat = "dd'/'MM'/'yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
 
-        return this.fecha.get(Calendar.DAY_OF_MONTH) + "/" +  this.fecha.get(Calendar.MAY) + "/" + this.fecha.get(Calendar.YEAR);
+        return sdf.format(this.fecha.getTime());
 
+    }
+
+    public int getIndex(){
+        int aux = 0;
+        for(int i = 0;i<categorias.length;i++){
+            if(this.categoria.equalsIgnoreCase(categorias[i])){
+                aux = i;
+            }
+        }
+    return aux;
     }
 
     @Override

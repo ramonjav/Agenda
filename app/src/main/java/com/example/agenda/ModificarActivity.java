@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-
 import com.example.agenda.datos.Notas;
 
 import java.text.SimpleDateFormat;
@@ -20,8 +19,9 @@ import java.util.Locale;
 
 import static com.example.agenda.listDatos.listNotas;
 
-public class Crear_Nota extends AppCompatActivity {
+public class ModificarActivity extends AppCompatActivity {
 
+    TextView titulo;
     EditText nueva;
     EditText fecha;
     Spinner categoria;
@@ -31,7 +31,9 @@ public class Crear_Nota extends AppCompatActivity {
     String myFormat = "dd '/' MMM '/' yyyy";
     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
     Calendar mycalendar = Calendar.getInstance();
+    Calendar fechaaux;
 
+    Notas notaaux;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,19 +44,35 @@ public class Crear_Nota extends AppCompatActivity {
         categoria = (Spinner)findViewById(R.id.spinner);
         guardar = (Button)findViewById(R.id.btnguardar);
         cancel = (Button)findViewById(R.id.btncancel);
+        titulo = (TextView)findViewById(R.id.textView);
 
-        fecha.setText(sdf.format(mycalendar.getTime()));
+        Bundle extras = getIntent().getExtras();
 
+        int indice = extras.getInt("nota", 0);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Notas.getCategorias());
+        notaaux = listNotas.get(indice);
+        titulo.setText("Modifiar Notas");
+        fechaaux = notaaux.getFecha();
+        fecha.setText(sdf.format(notaaux.getFecha().getTime()));
 
-        categoria.setAdapter(dataAdapter);
 
         fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                leerfecha(Calendar.getInstance());
+            }
+        });
 
-                leerfecha(mycalendar);
+        guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String cat = categoria.getSelectedItem().toString();
+                String text = nueva.getText().toString();
+                notaaux.setCategoria(cat);
+                notaaux.setTexto(text);
+                notaaux.setFecha(fechaaux);
+
+                finish();
             }
         });
 
@@ -65,18 +83,15 @@ public class Crear_Nota extends AppCompatActivity {
             }
         });
 
-        guardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String categoria2 = categoria.getSelectedItem().toString();
-                String textto = nueva.getText().toString();
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Notas.getCategorias());
 
-                listNotas.add(0,  new Notas(mycalendar, textto, categoria2));
+        categoria.setAdapter(dataAdapter);
 
-                finish();
+        categoria.setSelection(notaaux.getIndex());
 
-            }
-        });
+        nueva.setText(notaaux.getTexto());
+
+        guardar.setText("Modificar");
     }
 
     private void leerfecha(Calendar fecha){
@@ -85,7 +100,7 @@ public class Crear_Nota extends AppCompatActivity {
         int month = fecha.get(Calendar.MONTH);
         int day = fecha.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog dtp = new DatePickerDialog(Crear_Nota.this, datepickerListener, year, month, day);
+        DatePickerDialog dtp = new DatePickerDialog(ModificarActivity.this, datepickerListener, year, month, day);
 
         dtp.setTitle("Selecciona fecha");
         dtp.show();

@@ -51,9 +51,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 createsimpledialog(position).show();
+                return true;
+            }
+        });
 
-
-                return false;
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, ModificarActivity.class);
+                intent.putExtra("nota", position);
+                startActivity(intent);
             }
         });
 
