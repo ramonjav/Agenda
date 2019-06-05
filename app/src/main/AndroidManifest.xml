@@ -9,8 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity"
-            android:theme ="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name=".InfoActivity"
+            android:theme="@style/MyTheme.NoActionBar.Dialog"
+            ></activity>
+
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +24,7 @@
         </activity>
         <activity android:name=".ModificarActivity" />
         <activity android:name=".Crear_Nota" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
