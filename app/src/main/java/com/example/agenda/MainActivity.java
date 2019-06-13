@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lista = (ListView)findViewById(R.id.list);
-        nuevaNote = (FloatingActionButton)findViewById(R.id.floatingActionButton7);
+        lista = findViewById(R.id.list);
+        nuevaNote = findViewById(R.id.floatingActionButton7);
         GestionFicheros.leerdatos(this);
 
         lna = new ListadoNotasAdapter(this, listNotas);
